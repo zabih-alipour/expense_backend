@@ -37,10 +37,14 @@ def get_invoices(subject):
         conn.row_factory = dict_factory
         cur = conn.cursor()
         if subject is None:
-            sql = ''' SELECT * FROM factore '''
+            sql = ''' SELECT f.id, f.factor_date, f.item_id, f.description, f.price, f.quality, i.name as item_name  
+                      FROM factore f 
+                      join item i on f.item_id = i.id '''
             cur.execute(sql)
         else:
-            sql = ''' SELECT * FROM factore f WHERE f.item_id=?'''
+            sql = ''' SELECT f.id, f.factor_date, f.item_id, f.description, f.price, f.quality, i.name  as item_name
+                      FROM factore f 
+                      join item i on f.item_id = i.id WHERE f.item_id=?'''
             cur.execute(sql, subject)
 
         return cur.fetchall()
