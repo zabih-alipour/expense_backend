@@ -36,7 +36,7 @@ def get_invoices(subject):
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = dict_factory
         cur = conn.cursor()
-        if subject is None:
+        if subject is None or subject == 0:
             sql = ''' SELECT f.id, f.factor_date, f.item_id, f.description, f.price, f.quality, i.name as item_name  
                       FROM factore f 
                       join item i on f.item_id = i.id '''
@@ -44,8 +44,9 @@ def get_invoices(subject):
         else:
             sql = ''' SELECT f.id, f.factor_date, f.item_id, f.description, f.price, f.quality, i.name  as item_name
                       FROM factore f 
-                      join item i on f.item_id = i.id WHERE f.item_id=?'''
-            cur.execute(sql, subject)
+                      join item i on f.item_id = i.id 
+                      WHERE i.id= ? '''
+            cur.execute(sql, (subject,))
 
         return cur.fetchall()
 
