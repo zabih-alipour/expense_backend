@@ -22,3 +22,13 @@ def get_invoices():
 @app.route('/invoices/<int:subject_id>')
 def get_invoices_by_subject(subject_id):
     return json.dumps(db.get_invoices(subject_id))
+
+
+@app.route('/reports/daily-expense')
+def report_daily_expense():
+    return json.dumps(db.get_daily_expense())
+
+
+@app.route('/reports/subject-expense')
+def report_subject_expense():
+    return json.dumps(db.get_subject_expense())

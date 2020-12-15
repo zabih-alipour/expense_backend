@@ -56,3 +56,21 @@ def dict_factory(cursor, row):
     for idx, col in enumerate(cursor.description):
         d[col[0]] = row[idx]
     return d
+
+
+def get_daily_expense():
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = dict_factory
+        cur = conn.cursor()
+        sql = ''' SELECT * FROM vw_daily_summary '''
+        cur.execute(sql)
+        return cur.fetchall()
+
+
+def get_subject_expense():
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = dict_factory
+        cur = conn.cursor()
+        sql = ''' SELECT * FROM vw_item_summary '''
+        cur.execute(sql)
+        return cur.fetchall()
