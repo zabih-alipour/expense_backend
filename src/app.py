@@ -1,4 +1,4 @@
-from flask import Flask, json
+from flask import Flask, json, request
 import db as db
 
 app = Flask(__name__)
@@ -12,6 +12,12 @@ def get_current_time():
 @app.route('/subjects')
 def get_subjects():
     return json.dumps(db.get_subjects())
+
+
+@app.route('/subjects', methods=['POST'])
+def add_subject():
+    subject = request.get_json()
+    return json.dumps(db.add_subject(subject))
 
 
 @app.route('/subjects/<string:name>')

@@ -5,10 +5,10 @@ db_path = "./HomeExpenses.db"
 
 def add_subject(subject):
     sql = ''' INSERT INTO item ("name") VALUES (?) '''
-
+    print(subject)
     with sqlite3.connect(db_path) as conn:
         cur = conn.cursor()
-        cur.execute(sql, subject)
+        cur.execute(sql, (subject.get('name'),))
         conn.commit()
         return cur.lastrowid
 
