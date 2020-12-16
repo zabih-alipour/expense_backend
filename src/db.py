@@ -74,3 +74,12 @@ def get_subject_expense():
         sql = ''' SELECT * FROM vw_item_summary '''
         cur.execute(sql)
         return cur.fetchall()
+
+
+def get_subject_by_name(name):
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = dict_factory
+        cur = conn.cursor()
+        sql = ''' SELECT * FROM item i where i.name like ? '''
+        cur.execute(sql, (name + '%',))
+        return cur.fetchall()

@@ -14,6 +14,11 @@ def get_subjects():
     return json.dumps(db.get_subjects())
 
 
+@app.route('/subjects/<string:name>')
+def get_subject_by_name(name):
+    return json.dumps(db.get_subject_by_name(name))
+
+
 @app.route('/invoices')
 def get_invoices():
     return json.dumps(db.get_invoices(None))
