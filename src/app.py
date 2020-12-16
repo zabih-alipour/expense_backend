@@ -30,6 +30,12 @@ def get_invoices():
     return json.dumps(db.get_invoices(None))
 
 
+@app.route('/invoices', methods=['POST'])
+def add_invoice():
+    invoice = request.get_json()
+    return json.dumps(db.add_invoice(invoice))
+
+
 @app.route('/invoices/<int:subject_id>')
 def get_invoices_by_subject(subject_id):
     return json.dumps(db.get_invoices(subject_id))

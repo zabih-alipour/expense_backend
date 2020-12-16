@@ -23,11 +23,25 @@ def get_subjects():
 
 
 def add_invoice(invoice):
+    item_id = 0
+    subject_name = invoice.get("item").get("name")
+    for p in get_subject_by_name(subject_name):
+        item_id = p.get("id")
+
+    if item_id == 0:
+        item_id = add_subject({"name": subject_name})
+
+    obj = (invoice.get("factor_date"),
+           item_id,
+           invoice.get("description"),
+           invoice.get("price"),
+           invoice.get("quantity"))
+
     sql = ''' INSERT INTO factore ("factor_date", "item_id", "description", "price", "quality") 
                 VALUES (?, ?, ?, ?, ?) '''
     with sqlite3.connect(db_path) as conn:
         cur = conn.cursor()
-        cur.execute(sql, invoice)
+        cur.execute(sql, obj)
         conn.commit()
         return cur.lastrowid
 
