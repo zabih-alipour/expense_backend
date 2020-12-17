@@ -53,13 +53,13 @@ def get_invoices(subject):
         if subject is None or subject == 0:
             sql = ''' SELECT f.id, f.factor_date, f.item_id, f.description, f.price, f.quality, i.name as item_name  
                       FROM factore f 
-                      join item i on f.item_id = i.id '''
+                      join item i on f.item_id = i.id order by f.factor_date desc'''
             cur.execute(sql)
         else:
             sql = ''' SELECT f.id, f.factor_date, f.item_id, f.description, f.price, f.quality, i.name  as item_name
                       FROM factore f 
                       join item i on f.item_id = i.id 
-                      WHERE i.id= ? '''
+                      WHERE i.id= ? order by f.factor_date desc '''
             cur.execute(sql, (subject,))
 
         return cur.fetchall()
