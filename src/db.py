@@ -14,7 +14,7 @@ def add_subject(subject):
 
 
 def get_subjects():
-    sql = ''' SELECT * FROM item '''
+    sql = ''' SELECT * FROM item order by name'''
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = dict_factory
         cur = conn.cursor()
